@@ -1,0 +1,29 @@
+---
+hostname: P8
+interfaces:
+ -  name : Loopback0
+    address: 8.8.8.8/32
+    description: System_Loopback_Interface
+ -  name : GigabitEthernet0/0/0/1
+    address: 48.0.0.8/24
+    description: P8_to_P4
+ -  name : GigabitEthernet0/0/0/2
+    address: 78.0.0.8/24
+    description: P8_to_P7
+protocols:
+  isis:
+   -  net: 49.0000.0000.0008.00
+      sid: 8
+      interfaces:
+        -  name: Loopback0
+           loopback: True
+        -  name: GigabitEthernet0/0/0/0
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/1
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/2
+           loopback: False
+           metric: 10
+

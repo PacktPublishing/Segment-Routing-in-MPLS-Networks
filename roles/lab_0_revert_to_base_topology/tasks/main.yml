@@ -1,0 +1,25 @@
+---
+- name: 0.0 RENDER AND DISPLAY THE BASE CONFIGURATION
+  debug:
+    msg:
+    - "template: {{ templates[0] }}"
+    - "{{ lookup('template', templates[0]).split('\n') }}"
+
+- name: 0.1 RENDER AND SAVE THE BASE CONFIGURATION
+  template:
+    src: "{{ templates[0] }}"
+    dest: "xrcfg/lab_0_{{ hostname }}.base.xrcfg"
+  register: output
+
+- name: "{{ slow_secs }} secs PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    seconds: "{{ slow_secs }}"
+
+- name: 0.2 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    var: output.dest
+
+- name: 0.3 RENDER AND APPLY THE BASE CONFIGURATION
+  cisco.iosxr.iosxr_config:
+    src: "{{ templates[0] }}"
+    replace: config

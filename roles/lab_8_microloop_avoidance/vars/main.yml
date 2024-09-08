@@ -1,0 +1,19 @@
+---
+mins: 1
+slow_secs: 1
+secs: 15
+templates:
+- microloop_avoidance_{{ inventory_hostname | lower }}.j2
+- microloop_avoidance_{{ inventory_hostname | lower }}_enable.j2
+- microloop_avoidance_{{ inventory_hostname | lower }}_trigger.j2
+- microloop_avoidance_{{ inventory_hostname | lower }}_restore.j2
+command_set_1:
+- show isis fast-reroute 5.5.5.5/32 detail
+- show route 5.5.5.5/32
+- show cef 5.5.5.5/32
+command_set_2:
+- show isis protocol | utility egrep -A2 Micro
+- show isis fast-reroute 5.5.5.5/32 detail
+- show route 5.5.5.5/32
+- show route 5.5.5.5/32 detail
+- show cef 5.5.5.5/32

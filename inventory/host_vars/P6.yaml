@@ -1,0 +1,26 @@
+---
+hostname: P6
+interfaces:
+ -  name : Loopback0
+    address: 6.6.6.6/32
+    description: System_Loopback_Interface
+ -  name : GigabitEthernet0/0/0/0
+    address: 67.0.0.6/24
+    description: P6_to_P7
+ -  name : GigabitEthernet0/0/0/1
+    address: 26.0.0.6/24
+    description: P6_to_P2
+protocols:
+  isis:
+   -  net: 49.0000.0000.0006.00
+      sid: 6
+      interfaces:
+        -  name: Loopback0
+           loopback: True
+        -  name: GigabitEthernet0/0/0/0
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/1
+           loopback: False
+           metric: 10
+

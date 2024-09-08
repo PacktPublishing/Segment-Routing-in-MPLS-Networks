@@ -1,0 +1,71 @@
+---
+- name: 13.0 RENDER AND DISPLAY THE TI-LFA GLOBAL WEIGHTED SRLG PROTECTION CONFIGURATION
+  debug:
+    msg:
+    - "template: {{ templates[0] }}"
+    - "{{ lookup('template', templates[0]).split('\n') }}"
+
+- name: 13.1 RENDER AND SAVE THE TI-LFA GLOBAL WEIGHTED SRLG PROTECTION CONFIGURATION
+  template:
+    src: "{{ templates[0] }}"
+    dest: "xrcfg/lab_11_{{ hostname }}.tilfa_ns_gw_srlg.xrcfg"
+  register: output
+
+- name: "{{ slow_secs }} secs PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    seconds: "{{ slow_secs }}"
+
+- name: 13.2 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    var: output.dest
+
+- name: 13.3 RENDER AND APPLY THE TI-LFA GLOBAL WEIGHTED SRLG PROTECTION CONFIGURATION
+  cisco.iosxr.iosxr_config:
+    src: "{{ templates[0] }}"
+    match: none
+
+- name: "{{ mins }} seconds PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    minutes: "{{ mins }}"
+
+- name: 13.4 RUN COMMANDS TO VERIFY TI-LFA GLOBAL WEIGHTED SRLG PROTECTION
+  cisco.iosxr.iosxr_command:
+    commands:
+    - "{{ item }}"
+  loop: "{{ command_set_1 }}"
+  register: output
+  when: inventory_hostname == "P2"
+
+- name: 13.5 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    msg:
+    - "{{ output.results[idx].stdout_lines }}"
+  loop: "{{ command_set_1 }}"
+  loop_control:
+    index_var: idx
+  when: inventory_hostname == "P2"
+
+- name: 13.6 RENDER AND DISPLAY THE TI-LFA GLOBAL WEIGHTED SRLG REVERSAL CONFIGURATION
+  debug:
+    msg:
+    - "template: {{ templates[1] }}"
+    - "{{ lookup('template', templates[1]).split('\n') }}"
+
+- name: 13.7 RENDER AND SAVE THE TI-LFA GLOBAL WEIGHTED SRLG REVERSAL CONFIGURATION
+  template:
+    src: "{{ templates[1] }}"
+    dest: "xrcfg/lab_11_{{ hostname }}.tilfa_ns_gw_srlg_revert.xrcfg"
+  register: output
+
+- name: "{{ slow_secs }} secs PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    seconds: "{{ slow_secs }}"
+
+- name: 13.8 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    var: output.dest
+
+- name: 13.9 RENDER AND APPLY THE TI-LFA GLOBAL WEIGHTED SRLG REVERSAL CONFIGURATION
+  cisco.iosxr.iosxr_config:
+    src: "{{ templates[1] }}"
+    match: none

@@ -1,0 +1,6 @@
+---
+mins: 1
+slow_secs: 1
+secs: 15
+templates:
+- mpls_traff_eng.j2

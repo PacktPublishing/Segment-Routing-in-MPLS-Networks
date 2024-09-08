@@ -1,0 +1,1 @@
+{{ neighbor }}      {{ interface }}  *PtoP*         Up    {{hold}}   {{changed}} Yes None None

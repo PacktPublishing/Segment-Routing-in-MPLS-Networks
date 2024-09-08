@@ -1,0 +1,11 @@
+router isis IGP
+ address-family ipv4 unicast
+  segment-routing mpls sr-prefer
+ !
+ interface Loopback0
+  address-family ipv4 unicast
+   prefix-sid index 5
+  !
+ !
+!
+

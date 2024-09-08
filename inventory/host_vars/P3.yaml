@@ -1,0 +1,38 @@
+---
+hostname: P3
+interfaces:
+ -  name : Loopback0
+    address: 3.3.3.3/32
+    description: System_Loopback_Interface
+ -  name : GigabitEthernet0/0/0/0
+    address: 23.0.0.3/24
+    description: P3_to_P2
+ -  name : GigabitEthernet0/0/0/1
+    address: 37.0.0.3/24
+    description: P3_to_P7
+ -  name : GigabitEthernet0/0/0/2
+    address: 34.0.0.3/24
+    description: P3_to_P4
+ -  name : GigabitEthernet0/0/0/3
+    address: 39.0.0.3/24
+    description: P3_to_P9
+protocols:
+  isis:
+   -  net: 49.0000.0000.0003.00
+      sid: 3
+      interfaces:
+        -  name: Loopback0
+           loopback: True
+        -  name: GigabitEthernet0/0/0/0
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/1
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/2
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/3
+           loopback: False
+           metric: 10
+

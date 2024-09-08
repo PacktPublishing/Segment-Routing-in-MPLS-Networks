@@ -1,0 +1,54 @@
+
+hostname {{ hostname }}
+root
+
+{% for interface in interfaces -%}
+
+interface {{ interface.name }}
+ ipv4 address {{ interface.address }}
+ description {{ interface.description }}
+ no shutdown
+!
+root
+
+{% endfor -%}
+
+router isis IGP
+ is-type level-2-only
+ net {{ protocols.isis.0.net }}
+ log adjacency changes
+ address-family ipv4 unicast
+  mpls ldp auto-config
+  metric-style wide level 2
+ !
+ {% for interface in protocols.isis[0].interfaces -%}
+
+ interface {{ interface.name }}
+  {% if interface.loopback == True -%}
+  passive
+  address-family ipv4 unicast
+  !
+ !
+  {% else -%}
+  circuit-type level-2-only
+  point-to-point
+  hello-padding disable
+  address-family ipv4 unicast
+   metric {{ interface.metric }}
+  !
+ !
+  {% endif -%}
+ {% endfor %}
+!
+root
+
+mpls oam
+!
+mpls ldp
+ log
+  neighbor
+ !
+!
+root
+!
+

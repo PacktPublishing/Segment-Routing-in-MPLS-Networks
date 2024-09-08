@@ -1,0 +1,258 @@
+---
+- name: 3.0 RENDER AND DISPLAY THE LDP REMOVAL CONFIGURATION
+  debug:
+    msg:
+    - "template: {{ templates[0] }}"
+    - "{{ lookup('template', templates[0]).split('\n') }}"
+  when: hostname == "PE1" or hostname == "P2" or hostname == "P6"
+
+- name: 3.1 RENDER AND SAVE THE LDP REMOVAL CONFIGURATION
+  template:
+    src: "{{ templates[0] }}"
+    dest: "xrcfg/lab_3_{{ hostname }}.noldp.xrcfg"
+  register: output
+  when: hostname == "PE1" or hostname == "P2" or hostname == "P6"
+
+- name: "{{ slow_secs }} secs PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    seconds: "{{ slow_secs }}"
+
+- name: 3.2 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    var: output.dest
+  when: hostname == "PE1" or hostname == "P2" or hostname == "P6"
+
+- name: 3.3 RENDER AND APPLY THE LDP REMOVAL CONFIGURATION
+  cisco.iosxr.iosxr_config:
+    src: "{{ templates[0] }}"
+    match: none
+  when: hostname == "PE1" or hostname == "P2" or hostname == "P6"
+
+- name: "{{ mins }} minutes PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    minutes: "{{ mins }}"
+
+- name: 3.4 TRACEOUTE MPLS 5.5.5.5/32
+  cisco.iosxr.iosxr_command:
+    commands:
+    - traceroute mpls ipv4 5.5.5.5/32
+  when: hostname == "PE1"
+  register: output
+
+- name: 3.5 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    msg:
+    - "traceroute mpls ipv4 5.5.5.5/32"
+    - "{{ output.stdout_lines[0] }}"
+  when: hostname == "PE1"
+
+- name: 3.6 STITCH LDP TO SR (works automatically) TRACEROUTE MPLS 1.1.1.1/32
+  cisco.iosxr.iosxr_command:
+    commands:
+    - "{{ item }}"
+  loop: "{{ command_set_1 }}"
+  when: hostname == "PE5"
+  register: output
+
+- name: 3.7 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    msg:
+    - "{{ output.results[idx].stdout_lines }}"
+  loop: "{{ command_set_1 }}"
+  loop_control:
+    index_var: idx
+  when: hostname == "PE5"
+
+- name: 3.8 RUN COMMANDS TO VERIFY LDP TO SR LABEL STITCHING
+  cisco.iosxr.iosxr_command:
+    commands:
+    - "{{ item }}"
+  loop: "{{ command_set_2 }}"
+  when: hostname == "P3"
+  register: output
+
+- name: 3.9 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    msg:
+    - "{{ output.results[idx].stdout_lines }}"
+  loop: "{{ command_set_2 }}"
+  loop_control:
+    index_var: idx
+  when: hostname == "P3"
+
+- name: 3.10 RUN AND PARSE WITH TTP(TEMPLATE TEXT PARSER) TO CAPTURE LOCAL LDP LABEL
+  ansible.utils.cli_parse:
+    command: show mpls ldp forwarding 1.1.1.1/32
+    parser:
+      name: ansible.utils.ttp
+      template_path: "templates/iosxr_show_mpls_forwarding_prefix.ttp"
+    set_fact: show_mpls_ldp_forwarding_1_1_1_1
+  when: hostname == "P3"
+
+- name: 3.11 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    msg:
+    - "show mpls ldp forwarding 1.1.1.1/32"
+    - "{{ show_mpls_ldp_forwarding_1_1_1_1 }}"
+  when: hostname == "P3"
+
+- name: 3.12 USE THE CAPTURED LOCAL/IN LABEL TO VERIFY STITCHED SR LABEL
+  cisco.iosxr.iosxr_command:
+    commands:
+    - "{{ item }}"
+  loop: "{{ command_set_3 }}"
+  when: hostname == "P3"
+  register: output
+
+- name: 3.13 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    msg:
+    - "{{ output.results[idx].stdout_lines }}"
+  loop: "{{ command_set_3 }}"
+  loop_control:
+    index_var: idx
+  when: hostname == "P3"
+
+- name: 3.14 RENDER AND DISPLAY SRMS [SEGMENT ROUTING MAPPING SERVER] CONFIGURATION
+  debug:
+    msg: 
+    - "template: {{ templates[1] }}"
+    - "{{ lookup('template', templates[1]).split('\n') }}"
+  when: hostname == "P6"
+
+- name: 3.15 RENDER AND SAVE SRMS [SEGMENT ROUTING MAPPING SERVER] CONFIGURATION
+  template:
+    src: "{{ templates[1] }}"
+    dest: "xrcfg/lab_3_{{ hostname }}.srms.xrcfg"
+  register: output
+  when: hostname == "P6"
+
+- name: "{{ slow_secs }} secs PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    seconds: "{{ slow_secs }}"
+
+- name: 3.16 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    var: output.dest
+  when: hostname == "P6"
+
+- name: 3.17 STITCH SR TO LDP (RENDER AND CONFIGURE SRMS [SEGMENT ROUTING MAPPING SERVER])
+  cisco.iosxr.iosxr_config:
+    src: "{{ templates[1] }}"
+    match: none
+  when: hostname == "P6"
+
+- name: "{{ mins }} minutes PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    minutes: "{{ mins }}"
+
+- name: 3.18 RUN COMMANDS TO VERIFY SR TO LDP LABEL STITCHING
+  cisco.iosxr.iosxr_command:
+    commands:
+    - show cef 5.5.5.5/32
+  when: hostname == "P3"
+  register: output
+
+- name: 3.19 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    msg: 
+    - "show cef 5.5.5.5/32"
+    - "{{ output.stdout_lines }}"
+  when: hostname == "P3"
+
+- name: 3.20 TRACEOUTE MPLS 5.5.5.5/32
+  cisco.iosxr.iosxr_command:
+    commands:
+    - traceroute sr-mpls 5.5.5.5/32
+  when: hostname == "PE1"
+  register: output
+
+- name: 3.21 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    msg: 
+    - "traceroute sr-mpls 5.5.5.5/32"
+    - "{{ output.stdout_lines }}"
+  when: hostname == "PE1"
+
+- name: 3.22 RENDER AND DISPLAY SR-PREFER CONFIGURATION
+  debug:
+    msg: 
+    - "template: {{ templates[2] }}"
+    - "{{ lookup('template', templates[2]).split('\n') }}"
+  when: hostname == "PE5" or hostname == "P4" or hostname == "P8"
+
+- name: 3.23 RENDER AND SAVE THE SR-PREFER CONFIGURATION
+  template:
+    src: "{{ templates[2] }}"
+    dest: "xrcfg/lab_3_{{ hostname }}.sronly_p1.xrcfg"
+  register: output
+  when: hostname == "PE5" or hostname == "P4" or hostname == "P8"
+
+- name: "{{ slow_secs }} secs PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    seconds: "{{ slow_secs }}"
+
+- name: 3.24 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    var: output.dest
+  when: hostname == "PE5" or hostname == "P4" or hostname == "P8"
+
+- name: 3.25 CONFIGURE SR WITH SR-PREFER ON REMAINING ROUTERS 
+  cisco.iosxr.iosxr_config:
+    src: "{{ templates[2] }}"
+    match: none
+  when: hostname == "PE5" or hostname == "P4" or hostname == "P8"
+
+- name: 3.26 RENDER AND DISPLAY REMOVE LDP CONFIGURATION
+  debug:
+    msg: 
+    - "template: {{ templates[3] }}"
+    - "{{ lookup('template', templates[3]).split('\n') }}"
+
+- name: 3.27 RENDER AND SAVE REMOVE LDP CONFIGURATION
+  template:
+    src: "{{ templates[3] }}"
+    dest: "xrcfg/lab_3_{{ hostname }}.noldp.xrcfg"
+  register: output
+
+- name: "{{ slow_secs }} secs PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    seconds: "{{ slow_secs }}"
+
+- name: 3.28 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    var: output.dest
+
+- name: 3.29 REMOVE LDP FROM ALL ROUTERS
+  cisco.iosxr.iosxr_config:
+    src: "{{ templates[3] }}"
+    match: none
+
+- name: 3.30 RENDER AND DISPLAY SRMS REMOVAL CONFIGURATION
+  debug:
+    msg: 
+    - "template: {{ templates[4] }}"
+    - "{{ lookup('template', templates[4]).split('\n') }}"
+  when: hostname == "P6"
+
+- name: 3.31 RENDER AND SAVE SRMS REMOVAL CONFIGURATION
+  template:
+    src: "{{ templates[4] }}"
+    dest: "xrcfg/lab_3_{{ hostname }}.nosrms.xrcfg"
+  when: hostname == "P6"
+  register: output
+
+- name: "{{ slow_secs }} secs PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    seconds: "{{ slow_secs }}"
+
+- name: 3.32 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    var: output.dest
+  when: hostname == "P6"
+
+- name: 3.33 RENDER AND REMOVE SRMS CONFIGURATION FROM P6
+  cisco.iosxr.iosxr_config:
+    src: "{{ templates[4] }}"
+    match: none
+  when: hostname == "P6"

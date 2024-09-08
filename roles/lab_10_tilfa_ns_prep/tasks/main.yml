@@ -1,0 +1,25 @@
+---
+- name: 10.0 RENDER AND DISPLAY THE TI-LFA NODE + SRLG PROTECTION PREPARATION CONFIGURATION
+  debug:
+    msg:
+    - "template: {{ templates[0] }}"
+    - "{{ lookup('template', templates[0]).split('\n') }}"
+
+- name: 10.1 RENDER AND SAVE THE TI-LFA NODE + SRLG PROTECTION PREPARATION CONFIGURATION
+  template:
+    src: "{{ templates[0] }}"
+    dest: "xrcfg/lab_9_{{ hostname }}.tilfa_ns_prep.xrcfg"
+  register: output
+
+- name: "{{ slow_secs }} secs PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    seconds: "{{ slow_secs }}"
+
+- name: 10.2 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    var: output.dest
+
+- name: 10.3 RENDER AND APPLY THE TI-LFA NODE + SRLG PROTECTION PREPARATION CONFIGURATION
+  cisco.iosxr.iosxr_config:
+    src: "{{ templates[0] }}"
+    match: none
