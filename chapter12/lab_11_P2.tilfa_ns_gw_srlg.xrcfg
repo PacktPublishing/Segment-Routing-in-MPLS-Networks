@@ -1,6 +1,0 @@
-router isis IGP
- address-family ipv4 unicast
-  fast-reroute per-prefix srlg-protection weighted-global
- !
-!
-
