@@ -1,0 +1,58 @@
+name: srmpls
+prefix: ""
+
+mgmt:
+  network: clab-srmpls-mgmt
+  ipv4-subnet: 192.168.18.0/24
+  ipv4-gw: 192.168.18.100
+
+topology:
+  kinds:
+    vr-xrv9k:
+      image: vrnetlab/vr-xrv9k:7.5.2
+      env:
+        VCPU: 4
+        RAM: 16384
+  nodes:
+    PE1:
+      kind: vr-xrv9k
+      mgmt-ipv4: 192.168.18.1
+    P2:
+      kind: vr-xrv9k
+      mgmt-ipv4: 192.168.18.2
+    P3:
+      kind: vr-xrv9k
+      mgmt-ipv4: 192.168.18.3
+    P4:
+      kind: vr-xrv9k
+      mgmt-ipv4: 192.168.18.4
+    PE5:
+      kind: vr-xrv9k
+      mgmt-ipv4: 192.168.18.5
+    P6:
+      kind: vr-xrv9k
+      mgmt-ipv4: 192.168.18.6
+    P7:
+      kind: vr-xrv9k
+      mgmt-ipv4: 192.168.18.7
+    P8:
+      kind: vr-xrv9k
+      mgmt-ipv4: 192.168.18.8
+    P9:
+      kind: vr-xrv9k
+      mgmt-ipv4: 192.168.18.9
+  links:
+    - endpoints: ["PE1:eth3", "P2:eth3"]
+    - endpoints: ["P2:eth1", "P3:eth1"]
+    - endpoints: ["P2:eth2", "P6:eth2"]
+    - endpoints: ["P2:eth4", "P7:eth4"]
+    - endpoints: ["P3:eth2", "P7:eth2"]
+    - endpoints: ["P3:eth3", "P4:eth3"]
+    - endpoints: ["P4:eth1", "PE5:eth1"]
+    - endpoints: ["P4:eth5", "P7:eth5"]
+    - endpoints: ["P4:eth2", "P8:eth2"]
+    - endpoints: ["P6:eth1", "P7:eth1"]
+    - endpoints: ["P7:eth3", "P8:eth3"]
+    - endpoints: ["P2:eth6", "P9:eth6"]
+    - endpoints: ["P3:eth4", "P9:eth4"]
+

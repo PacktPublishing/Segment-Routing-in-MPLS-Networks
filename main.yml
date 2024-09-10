@@ -1,11 +1,11 @@
 ---
-- name: "0. RESTORE BASE TOPOLOGY"
-  hosts: routers
-  gather_facts: false
-  roles:
-    - lab_0_revert_to_base_topology
-  tags:
-    - lab_0
+# - name: "0. RESTORE BASE TOPOLOGY"
+#   hosts: routers
+#   gather_facts: false
+#   roles:
+#     - lab_0_revert_to_base_topology
+#   tags:
+#     - lab_0
 
 - name: "1. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - GETTING STARTED"
   hosts: routers !P9
