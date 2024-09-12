@@ -1,0 +1,8 @@
+{% for interface in protocols.isis[0].interfaces -%}
+{% if interface.loopback != True -%}
+router isis IGP interface {{ interface.name }} address-family ipv4 unicast fast-reroute per-prefix
+router isis IGP interface {{ interface.name }} address-family ipv4 unicast fast-reroute per-prefix ti-lfa
+{% endif -%}
+{% endfor -%}
+!
+

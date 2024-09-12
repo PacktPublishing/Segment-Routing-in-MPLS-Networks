@@ -1,0 +1,44 @@
+---
+hostname: P2
+interfaces:
+ -  name : Loopback0
+    address: 2.2.2.2/32
+    description: System_Loopback_Interface
+ -  name : GigabitEthernet0/0/0/0
+    address: 23.0.0.2/24
+    description: P2_to_P3
+ -  name : GigabitEthernet0/0/0/1
+    address: 26.0.0.2/24
+    description: P2_to_P6
+ -  name : GigabitEthernet0/0/0/2
+    address: 12.0.0.2/24
+    description: P2_to_PE1
+ -  name : GigabitEthernet0/0/0/3
+    address: 27.0.0.2/24
+    description: P2_to_P7
+ -  name : GigabitEthernet0/0/0/5
+    address: 29.0.0.2/24
+    description: P2_to_P9
+protocols:
+  isis:
+   -  net: 49.0000.0000.0002.00
+      sid: 2
+      interfaces:
+        -  name: Loopback0
+           loopback: True
+        -  name: GigabitEthernet0/0/0/0
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/1
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/2
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/3
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/5
+           loopback: False
+           metric: 10
+

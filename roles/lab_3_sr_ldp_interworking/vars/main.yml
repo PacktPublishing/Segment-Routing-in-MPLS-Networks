@@ -1,0 +1,19 @@
+---
+mins: 1
+slow_secs: 1
+templates:
+- sr_ldp_template.j2
+- srms_template.j2
+- sr_only_part1.j2
+- sr_only_remove_ldp.j2
+- sr_only_remove_srms.j2
+command_set_1:
+- traceroute mpls ipv4 1.1.1.1/32
+- traceroute mpls multipath ipv4 1.1.1.1/32 verbose
+command_set_2:
+- show cef 1.1.1.1/32
+- show mpls forwarding prefix 1.1.1.1/32
+- show mpls ldp forwarding 1.1.1.1/32
+command_set_3:
+- show mpls forwarding labels {{ show_mpls_ldp_forwarding_1_1_1_1[0][0].in_label }}
+- show cef mpls local-label {{ show_mpls_ldp_forwarding_1_1_1_1[0][0].in_label }} eOS detail

@@ -1,0 +1,12 @@
+---
+mins: 1
+slow_secs: 1
+templates:
+- ds_tilfa.j2
+- ds_tilfa_revert.j2
+command_set_1:
+- traceroute sr-mpls 5.5.5.5/32
+- show isis adjacency Gi0/0/0/1 detail
+command_set_2:
+- show isis fast-reroute 5.5.5.5/32 detail
+- show cef 5.5.5.5/32

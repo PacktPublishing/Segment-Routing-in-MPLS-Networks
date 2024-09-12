@@ -1,0 +1,44 @@
+---
+- name: 12.0 RENDER AND DISPLAY THE TI-LFA LOCAL SRLG-DISJOINT PROTECTION CONFIGURATION
+  debug:
+    msg:
+    - "template: {{ templates[0] }}"
+    - "{{ lookup('template', templates[0]).split('\n') }}"
+
+- name: 12.1 RENDER AND SAVE THE TI-LFA LOCAL SRLG-DISJOINT PROTECTION CONFIGURATION
+  template:
+    src: "{{ templates[0] }}"
+    dest: "xrcfg/lab_10_{{ hostname }}.tilfa_ns_local_srlg.xrcfg"
+  register: output
+
+- name: "{{ slow_secs }} secs PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    seconds: "{{ slow_secs }}"
+
+- name: 12.2 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    var: output.dest
+
+- name: 12.3 RENDER AND APPLY THE TI-LFA LOCAL SRLG-DISJOINT PROTECTION CONFIGURATION
+  cisco.iosxr.iosxr_config:
+    src: "{{ templates[0] }}"
+    match: none
+
+- name: "{{ mins }} seconds PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    minutes: "{{ mins }}"
+
+- name: 12.4 RUN COMMANDS TO VERIFY TI-LFA LOCAL SRLG-DISJOINT PROTECTION
+  cisco.iosxr.iosxr_command:
+    commands:
+    - "{{ item }}"
+  loop: "{{ command_set_1 }}"
+  register: output
+
+- name: 12.5 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    msg:
+    - "{{ output.results[idx].stdout_lines }}"
+  loop: "{{ command_set_1 }}"
+  loop_control:
+    index_var: idx

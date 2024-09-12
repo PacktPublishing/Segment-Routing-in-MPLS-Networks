@@ -1,0 +1,18 @@
+---
+mins: 2
+slow_secs: 1
+templates:
+- ip_igp_ldp_template.j2
+command_set_1:
+- show ipv4 interface brief
+- ping 12.0.0.2
+- show isis adjacency
+- show route
+- show isis route 5.5.5.5/32 detail
+- show route 5.5.5.5/32 detail
+- show mpls ldp neighbor brief
+- show mpls label table
+- show mpls forwarding
+- show cef 5.5.5.5/32
+- traceroute mpls ipv4 5.5.5.5/32
+- traceroute mpls multipath ipv4 5.5.5.5/32 verbose

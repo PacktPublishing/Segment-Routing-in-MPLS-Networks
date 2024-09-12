@@ -1,0 +1,38 @@
+---
+hostname: P4
+interfaces:
+ -  name : Loopback0
+    address: 4.4.4.4/32
+    description: System_Loopback_Interface
+ -  name : GigabitEthernet0/0/0/0
+    address: 45.0.0.4/24
+    description: P4_to_PE5
+ -  name : GigabitEthernet0/0/0/1
+    address: 48.0.0.4/24
+    description: P4_to_P8
+ -  name : GigabitEthernet0/0/0/2
+    address: 34.0.0.4/24
+    description: P4_to_P3
+ -  name : GigabitEthernet0/0/0/4
+    address: 47.0.0.4/24
+    description: P4_to_P7
+protocols:
+  isis:
+   -  net: 49.0000.0000.0004.00
+      sid: 4
+      interfaces:
+        -  name: Loopback0
+           loopback: True
+        -  name: GigabitEthernet0/0/0/0
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/1
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/2
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/4
+           loopback: False
+           metric: 10
+

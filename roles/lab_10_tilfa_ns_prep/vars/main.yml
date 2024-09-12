@@ -1,0 +1,5 @@
+---
+mins: 1
+slow_secs: 1
+templates:
+- tilfa_ns_prep_{{ inventory_hostname | lower }}.j2

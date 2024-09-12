@@ -1,0 +1,12 @@
+---
+mins: 1
+slow_secs: 1
+templates:
+- prep_p9.j2
+- tilfa_tiebrkr_prefer_link.j2
+- tilfa_tiebrkr_prefer_srlg.j2
+- tilfa_tiebrkr_prefer_node.j2
+command_set_1:
+- show isis fast-reroute 5.5.5.5/32 detail
+- show route 5.5.5.5/32
+- show cef 5.5.5.5/32
