@@ -1,0 +1,6 @@
+router isis IGP
+ address-family ipv4 unicast
+  no mpls ldp auto-config
+ !
+!
+

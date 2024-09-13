@@ -1,0 +1,44 @@
+---
+hostname: P7
+interfaces:
+ -  name : Loopback0
+    address: 7.7.7.7/32
+    description: System_Loopback_Interface
+ -  name : GigabitEthernet0/0/0/0
+    address: 67.0.0.7/24
+    description: P7_to_P6
+ -  name : GigabitEthernet0/0/0/1
+    address: 37.0.0.7/24
+    description: P7_to_P7
+ -  name : GigabitEthernet0/0/0/2
+    address: 78.0.0.7/24
+    description: P7_to_P8
+ -  name : GigabitEthernet0/0/0/3
+    address: 27.0.0.7/24
+    description: P7_to_P2
+ -  name : GigabitEthernet0/0/0/4
+    address: 47.0.0.7/24
+    description: P7_to_P4
+protocols:
+  isis:
+   -  net: 49.0000.0000.0007.00
+      sid: 7
+      interfaces:
+        -  name: Loopback0
+           loopback: True
+        -  name: GigabitEthernet0/0/0/0
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/1
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/2
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/3
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/4
+           loopback: False
+           metric: 10
+

@@ -1,0 +1,26 @@
+---
+hostname: P9
+interfaces:
+ -  name : Loopback0
+    address: 9.9.9.9/32
+    description: System_Loopback_Interface
+ -  name : GigabitEthernet0/0/0/3
+    address: 39.0.0.9/24
+    description: P9_to_P3
+ -  name : GigabitEthernet0/0/0/5
+    address: 29.0.0.9/24
+    description: P9_to_P2
+protocols:
+  isis:
+   -  net: 49.0000.0000.0009.00
+      sid: 9
+      interfaces:
+        -  name: Loopback0
+           loopback: True
+        -  name: GigabitEthernet0/0/0/3
+           loopback: False
+           metric: 10
+        -  name: GigabitEthernet0/0/0/5
+           loopback: False
+           metric: 10
+

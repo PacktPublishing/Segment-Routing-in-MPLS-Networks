@@ -1,0 +1,52 @@
+
+hostname PE1
+root
+
+interface Loopback0
+ ipv4 address 1.1.1.1/32
+ description System_Loopback_Interface
+ no shutdown
+!
+root
+
+interface GigabitEthernet0/0/0/2
+ ipv4 address 12.0.0.1/24
+ description PE1_to_P2
+ no shutdown
+!
+root
+
+router isis IGP
+ is-type level-2-only
+ net 49.0000.0000.0001.00
+ log adjacency changes
+ address-family ipv4 unicast
+  mpls ldp auto-config
+  metric-style wide level 2
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+ !
+  interface GigabitEthernet0/0/0/2
+  circuit-type level-2-only
+  point-to-point
+  hello-padding disable
+  address-family ipv4 unicast
+   metric 10
+  !
+ !
+  !
+root
+
+mpls oam
+!
+mpls ldp
+ log
+  neighbor
+ !
+!
+root
+!
+

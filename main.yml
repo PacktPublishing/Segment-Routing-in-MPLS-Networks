@@ -1,0 +1,138 @@
+---
+- name: "0. RESTORE BASE TOPOLOGY"
+  hosts: routers
+  gather_facts: false
+  roles:
+    - lab_0_revert_to_base_topology
+  tags:
+    - lab_0
+
+- name: "1. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - GETTING STARTED"
+  hosts: routers !P9
+  gather_facts: false
+  roles:
+    - lab_1_getting_started
+  tags:
+    - lab_1
+
+- name: "1.x CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - GETTING STARTED"
+  hosts: PE1, P2, P3, P7, P4
+  serial: 1
+  gather_facts: false
+  roles:
+    - lab_1x_getting_started
+  tags:
+    - lab_1
+
+- name: "2. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - INTRODUCE SEGMENT ROUTING"
+  hosts: PE1, P2, P3, P6, P7
+  gather_facts: false
+  roles:
+    - lab_2_intro_segment_routing
+  tags:
+    - lab_2
+
+- name: "3. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - SR <-> LDP INTERWORKING"
+  hosts: routers !P9
+  gather_facts: false
+  roles:
+    - lab_3_sr_ldp_interworking
+  tags:
+    - lab_3
+
+- name: "4. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - TOPOLOGY INDEPENDENT LOOPFREE ALTERNATE"
+  hosts: routers !P9
+  gather_facts: false
+  roles:
+    - lab_4_tilfa
+  tags:
+    - lab_4
+
+- name: "5. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - ZERO SEGMENT TI-LFA"
+  hosts: zstilfa
+  gather_facts: false
+  roles:
+    - lab_5_zs_tilfa
+  tags:
+    - lab_5
+
+- name: "6. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - SINGLE SEGMENT TI-LFA"
+  hosts: zstilfa !P6
+  gather_facts: false
+  roles:
+    - lab_6_ss_tilfa
+  tags:
+    - lab_6
+
+- name: "7. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - DOUBLE SEGMENT TI-LFA"
+  hosts: P2, P4, P8
+  gather_facts: false
+  roles:
+    - lab_7_ds_tilfa
+  tags:
+    - lab_7
+
+- name: "8. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - MICROLOOP AVOIDANCE"
+  hosts: P2, P7, P8
+  gather_facts: false
+  roles:
+    - lab_8_microloop_avoidance
+  tags:
+    - lab_8
+
+- name: "9. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - MPLS TRAFFIC-ENGINEERING"
+  hosts: routers !P9
+  gather_facts: false
+  roles:
+    - lab_9_mpls_traffic_eng
+  tags:
+    - lab_9
+
+- name: "10. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - TI-LFA NODE + SRLG PROTECTION PREPARATION"
+  hosts: P4, P6, P7, P8
+  gather_facts: false
+  roles:
+    - lab_10_tilfa_ns_prep
+  tags:
+    - lab_10
+
+- name: "11. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - TI-LFA NODE PROTECTION"
+  hosts: P2
+  gather_facts: false
+  roles:
+    - lab_11_tilfa_ns_node
+  tags:
+    - lab_11
+
+- name: "12. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - TI-LFA LOCAL SRLG-DISJOINT PROTECTION"
+  hosts: P2
+  gather_facts: false
+  roles:
+    - lab_12_tilfa_ns_local_srlg
+  tags:
+    - lab_12
+
+- name: "13. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - TI-LFA GLOBAL WEIGHTED SRLG PROTECTION"
+  hosts: P2, P7
+  gather_facts: false
+  roles:
+    - lab_13_tilfa_ns_global_srlg
+  tags:
+    - lab_13
+
+- name: "14. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - TI-LFA NODE + SRLG PROTECTION"
+  hosts: P2
+  gather_facts: false
+  roles:
+    - lab_14_tilfa_ns_node_plus_srlg
+  tags:
+    - lab_14
+
+- name: "15. CISCO XRV9K SR WITH TI-LFA LAB PLAYBOOK - TI-LFA TIEBREAKER LINK vs NODE vs SRLG PROTECTION"
+  hosts: P2, P3, P9
+  gather_facts: false
+  roles:
+    - lab_15_tilfa_tiebrkr_link_node_srlg
+  tags:
+    - lab_15
+

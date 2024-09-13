@@ -1,0 +1,9 @@
+---
+mins: 1
+slow_secs: 1
+templates:
+- tilfa_ns_node.j2
+- tilfa_ns_node_revert.j2
+command_set_1:
+- sh isis fast-reroute 5.5.5.5/32 detail
+- show cef 5.5.5.5/32

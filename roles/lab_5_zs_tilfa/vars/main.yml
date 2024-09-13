@@ -1,0 +1,11 @@
+---
+mins: 1
+slow_secs: 1
+templates:
+- zs_tilfa_{{ inventory_hostname | lower }}.j2
+- zs_tilfa_revert_{{ inventory_hostname | lower }}.j2
+command_set_1:
+- show isis route 5.5.5.5/32 detail
+- show isis fast-reroute 5.5.5.5/32 detail
+- show route 5.5.5.5/32
+- show cef 5.5.5.5/32

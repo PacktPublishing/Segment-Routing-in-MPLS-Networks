@@ -1,0 +1,19 @@
+---
+mins: 1
+slow_secs: 1
+templates:
+- sr_template.j2
+- sr_prefer_template.j2
+command_set_1:
+- show mpls label table detail
+- show isis adjacency detail
+- show isis database verbose PE1 
+- show isis segment-routing label table
+- show route 7.7.7.7/32 detail
+- show mpls forwarding
+- show cef 7.7.7.7/32
+- traceroute mpls ipv4 7.7.7.7/32
+- traceroute sr-mpls 7.7.7.7/32   
+command_set_2:
+- traceroute mpls ipv4 7.7.7.7/32
+- traceroute mpls ipv4 5.5.5.5/32

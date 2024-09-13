@@ -1,0 +1,25 @@
+---
+- name: 9.0 RENDER AND DISPLAY THE MPLS TRAFFIC-ENGINEERING CONFIGURATION
+  debug:
+    msg:
+    - "template: {{ templates[0] }}"
+    - "{{ lookup('template', templates[0]).split('\n') }}"
+
+- name: 9.1 RENDER AND SAVE THE MPLS TRAFFIC-ENGINEERING CONFIGURATION
+  template:
+    src: "{{ templates[0] }}"
+    dest: "xrcfg/lab_9_{{ hostname }}.mpls_traffic_eng.xrcfg"
+  register: output
+
+- name: "{{ slow_secs }} secs PAUSE FOR CONVERGENCE"
+  ansible.builtin.pause:
+    seconds: "{{ slow_secs }}"
+
+- name: 9.2 DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    var: output.dest
+
+- name: 9.3 RENDER AND APPLY THE MPLS TRAFFIC-ENGINEERING CONFIGURATION
+  cisco.iosxr.iosxr_config:
+    src: "{{ templates[0] }}"
+    match: none

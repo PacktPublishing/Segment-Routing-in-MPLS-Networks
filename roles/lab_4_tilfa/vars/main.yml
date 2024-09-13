@@ -1,0 +1,10 @@
+---
+mins: 1
+slow_secs: 1
+templates:
+- tilfa.j2
+command_set_1:
+- show isis interface GigabitEthernet 0/0/0/0
+- show isis fast-reroute 5.5.5.5/32 detail
+- show route 5.5.5.5/32
+- show cef 5.5.5.5/32

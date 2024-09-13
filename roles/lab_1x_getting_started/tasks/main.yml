@@ -1,0 +1,6 @@
+---
+- name: DISPLAY THE OUTPUT REGISTERED IN THE PREVIOUS TASK
+  debug:
+    msg:
+    - "show mpls forwarding prefix 5.5.5.5/32"
+    - "{{ output.stdout_lines[0] }}"

@@ -1,0 +1,6 @@
+---
+#The default ssh_type ansible-pylibssh has a bug while replacing config
+ansible_network_cli_ssh_type: paramiko 
+slow_secs: 1
+templates:
+- restore_topology_template.j2

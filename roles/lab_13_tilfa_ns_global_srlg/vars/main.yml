@@ -1,0 +1,10 @@
+---
+mins: 1
+slow_secs: 1
+templates:
+- tilfa_ns_global_srlg_{{ inventory_hostname | lower }}.j2
+- tilfa_ns_global_srlg_revert_{{ inventory_hostname | lower }}.j2
+command_set_1:
+- show isis database verbose internal P7 | utility egrep -A10 SRLG
+- sh isis fast-reroute 5.5.5.5/32 detail
+- show cef 5.5.5.5/32
