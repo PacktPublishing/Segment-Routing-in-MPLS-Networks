@@ -1,2 +1,2 @@
-# Segment-Routing-101
-Segment Routing 101, published by Packt
+# Segment Routing in MPLS Networks
+Segment Routing in MPLS Networks, published by Packt
