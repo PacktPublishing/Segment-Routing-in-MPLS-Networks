@@ -44,7 +44,7 @@ With the following software and hardware list you can run all code files present
 
 | Chapter  | Software required                                       | OS required 			       |
 | -------- | ------------------------------------------------------- | -------------------------|
-| 1-14     | GCP(Optional), EVE-NG Pro, Containerlab, Cisco IOS-XR, Server with 96 vCPUs, 1TB RAM, and 2TB SSD   | MacOS, Linux(Any), Windows |
+| 1-14     | GCP(Optional), EVE-NG Pro, Containerlab, Cisco IOS-XR, Server with 96 vCPUs 1TB RAM and 2TB SSD   | MacOS, Linux(Any), Windows |
 
 
 ### Related products <Other books you may enjoy>
