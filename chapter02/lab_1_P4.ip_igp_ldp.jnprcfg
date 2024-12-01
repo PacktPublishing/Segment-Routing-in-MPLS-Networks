@@ -1,0 +1,55 @@
+set interfaces lo0 unit 0 family inet address 4.4.4.4/32
+set interfaces lo0 unit 0 description System_Loopback_Interface
+
+set interfaces ge-0/0/0 unit 0 family inet address 45.0.0.4/24
+set interfaces ge-0/0/0 unit 0 description P4_to_PE5
+
+set interfaces ge-0/0/1 unit 0 family inet address 48.0.0.4/24
+set interfaces ge-0/0/1 unit 0 description P4_to_P8
+
+set interfaces ge-0/0/2 unit 0 family inet address 34.0.0.4/24
+set interfaces ge-0/0/2 unit 0 description P4_to_P3
+
+set interfaces ge-0/0/4 unit 0 family inet address 47.0.0.4/24
+set interfaces ge-0/0/4 unit 0 description P4_to_P7
+
+set interfaces lo0 unit 0 family iso address 49.0000.0000.0004.00
+set protocols isis interface lo0.0
+set protocols ldp interface lo0.0
+
+set interfaces ge-0/0/0 unit 0 family iso
+set interfaces ge-0/0/0 unit 0 family mpls
+set protocols isis interface ge-0/0/0.0 level 2 metric 10
+set protocols isis interface ge-0/0/0.0 point-to-point
+set protocols ldp interface ge-0/0/0.0
+set protocols mpls interface ge-0/0/0.0
+
+set interfaces ge-0/0/1 unit 0 family iso
+set interfaces ge-0/0/1 unit 0 family mpls
+set protocols isis interface ge-0/0/1.0 level 2 metric 10
+set protocols isis interface ge-0/0/1.0 point-to-point
+set protocols ldp interface ge-0/0/1.0
+set protocols mpls interface ge-0/0/1.0
+
+set interfaces ge-0/0/2 unit 0 family iso
+set interfaces ge-0/0/2 unit 0 family mpls
+set protocols isis interface ge-0/0/2.0 level 2 metric 10
+set protocols isis interface ge-0/0/2.0 point-to-point
+set protocols ldp interface ge-0/0/2.0
+set protocols mpls interface ge-0/0/2.0
+
+set interfaces ge-0/0/4 unit 0 family iso
+set interfaces ge-0/0/4 unit 0 family mpls
+set protocols isis interface ge-0/0/4.0 level 2 metric 10
+set protocols isis interface ge-0/0/4.0 point-to-point
+set protocols ldp interface ge-0/0/4.0
+set protocols mpls interface ge-0/0/4.0
+
+
+set routing-options router-id 4.4.4.4
+set protocols isis level 2 wide-metrics-only
+set protocols isis level 1 disable
+set protocols isis no-ipv6-routing
+set protocols ldp transport-address router-id
+
+

@@ -1,6 +1,0 @@
-srlg
- interface GigabitEthernet0/0/0/1
-  name SRLG-100
- !
-!
-
