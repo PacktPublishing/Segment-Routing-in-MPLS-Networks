@@ -1,0 +1,56 @@
+version 22.4R3.25;
+system {
+    host-name P9;
+    root-authentication {
+        encrypted-password "$6$tabSw90i$21Nc/ccF4dE4fh5ehkN12JiuAVVqqWWtq0EtKGn.oc5rZ7fmF78hdtAj1k/9sjlaOL7sen91QUgeSdVUgYwiI/"; ## SECRET-DATA
+    }
+    login {
+        class JNPR {
+            permissions all;
+        }
+        user juniper {
+            uid 2000;
+            class JNPR;
+            authentication {
+                encrypted-password "$6$JVGg8/Ss$bBTn34yJxXDsInUseUM..wDD47KfQzHS3rT48YpsFI1rdq.RXP8q7WDXvVeV8iFZKPFmkvLhI9zNhihGAkZD/."; ## SECRET-DATA
+            }
+        }
+    }
+    services {
+        netconf {
+            ssh;
+        }
+    }
+}
+chassis {
+    network-services enhanced-ip;
+}
+interfaces {
+    fxp0 {
+        unit 0 {
+            family inet {
+                address 192.168.18.19/24;
+            }
+        }
+    }
+}
+policy-options {
+    policy-statement LOAD-BALANCE {
+        then {
+            load-balance per-packet;
+        }
+    }
+}
+routing-options {
+    forwarding-table {
+        export LOAD-BALANCE;
+    }
+}
+protocols {
+    router-advertisement {
+        interface fxp0.0 {
+            managed-configuration;
+        }
+    }
+}
+

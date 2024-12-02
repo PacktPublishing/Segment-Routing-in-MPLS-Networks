@@ -1,9 +1,0 @@
-router isis IGP
- interface GigabitEthernet0/0/0/1
-  shutdown
- !
- interface GigabitEthernet0/0/0/2
-  shutdown
- !
-!
-
