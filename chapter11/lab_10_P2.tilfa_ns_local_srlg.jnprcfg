@@ -1,0 +1,5 @@
+set routing-options srlg SRLG-100 srlg-value 100 srlg-cost 400
+set protocols mpls interface ge-0/0/0.0 srlg SRLG-100
+set protocols mpls interface ge-0/0/3.0 srlg SRLG-100
+set protocols isis interface ge-0/0/0.0 level 2 post-convergence-lfa srlg-protection
+set protocols isis interface ge-0/0/3.0 level 2 post-convergence-lfa srlg-protection

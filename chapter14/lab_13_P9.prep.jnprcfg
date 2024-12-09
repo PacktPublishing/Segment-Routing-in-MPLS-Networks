@@ -1,0 +1,24 @@
+set interfaces ge-0/0/5 unit 0 family inet address 29.0.0.9/24
+set interfaces ge-0/0/3 unit 0 family inet address 39.0.0.9/24
+set interfaces lo0 unit 0 family inet address 9.9.9.9/32
+set interfaces ge-0/0/5 unit 0 family iso
+set interfaces ge-0/0/3 unit 0 family iso
+set interfaces ge-0/0/5 unit 0 family mpls
+set interfaces ge-0/0/3 unit 0 family mpls
+set protocols mpls interface ge-0/0/5.0
+set protocols mpls interface ge-0/0/3.0
+set interfaces lo0 unit 0 family iso address 49.0000.0000.0000.0009.00
+set routing-options router-id 9.9.9.9
+set protocols isis interface ge-0/0/5.0 level 2 metric 10
+set protocols isis interface ge-0/0/5.0 point-to-point
+set protocols isis interface ge-0/0/5.0 hello-padding disable
+set protocols isis interface ge-0/0/3.0 level 2 metric 10
+set protocols isis interface ge-0/0/3.0 point-to-point
+set protocols isis interface ge-0/0/3.0 hello-padding disable
+set protocols isis interface lo0.0 passive
+set protocols isis level 2 wide-metrics-only
+set protocols isis level 1 disable
+set protocols isis no-ipv6-routing
+set protocols isis source-packet-routing srgb start-label 16000
+set protocols isis source-packet-routing srgb index-range 8000
+set protocols isis source-packet-routing node-segment ipv4-index 9
