@@ -1,6 +1,7 @@
 Topology and Configuration for Juniper JunOS 22.4R3.25
----
+-
+#### Startup Config
 
-username: juniper
+- username: juniper
 
-password: Junip3r
+- password: Junip3r
