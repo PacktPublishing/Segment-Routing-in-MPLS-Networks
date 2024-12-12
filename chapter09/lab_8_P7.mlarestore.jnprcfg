@@ -1,0 +1,3 @@
+activate protocols isis interface ge-0/0/1.0
+activate protocols isis interface ge-0/0/3.0
+activate protocols isis interface ge-0/0/4.0
