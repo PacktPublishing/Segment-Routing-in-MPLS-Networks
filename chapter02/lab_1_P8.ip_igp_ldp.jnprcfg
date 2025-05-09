@@ -1,0 +1,35 @@
+set interfaces lo0 unit 0 family inet address 8.8.8.8/32
+set interfaces lo0 unit 0 description System_Loopback_Interface
+
+set interfaces ge-0/0/1 unit 0 family inet address 48.0.0.8/24
+set interfaces ge-0/0/1 unit 0 description P8_to_P4
+
+set interfaces ge-0/0/2 unit 0 family inet address 78.0.0.8/24
+set interfaces ge-0/0/2 unit 0 description P8_to_P7
+
+set interfaces lo0 unit 0 family iso address 49.0000.0000.0008.00
+set protocols isis interface lo0.0
+set protocols ldp interface lo0.0
+
+set interfaces ge-0/0/1 unit 0 family iso
+set interfaces ge-0/0/1 unit 0 family mpls
+set protocols isis interface ge-0/0/1.0 level 2 metric 10
+set protocols isis interface ge-0/0/1.0 point-to-point
+set protocols ldp interface ge-0/0/1.0
+set protocols mpls interface ge-0/0/1.0
+
+set interfaces ge-0/0/2 unit 0 family iso
+set interfaces ge-0/0/2 unit 0 family mpls
+set protocols isis interface ge-0/0/2.0 level 2 metric 10
+set protocols isis interface ge-0/0/2.0 point-to-point
+set protocols ldp interface ge-0/0/2.0
+set protocols mpls interface ge-0/0/2.0
+
+
+set routing-options router-id 8.8.8.8
+set protocols isis level 2 wide-metrics-only
+set protocols isis level 1 disable
+set protocols isis no-ipv6-routing
+set protocols ldp transport-address router-id
+
+

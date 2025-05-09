@@ -1,0 +1,3 @@
+set routing-options srlg SRLG-100 srlg-value 100 srlg-cost 400
+set protocols mpls interface ge-0/0/1.0 srlg SRLG-100
+

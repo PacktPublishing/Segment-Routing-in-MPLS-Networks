@@ -1,0 +1,2 @@
+delete protocols ldp
+delete protocols isis source-packet-routing ldp-stitching

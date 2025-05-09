@@ -1,0 +1,2 @@
+delete protocols isis source-packet-routing mapping-server SRMS
+delete routing-options source-packet-routing
